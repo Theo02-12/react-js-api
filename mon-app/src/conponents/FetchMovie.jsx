@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
 const FetchMovie = () => {
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState([]);
+
     // fetch movie // 
     useEffect(() => {
         const url = 'https://api.themoviedb.org/3/trending/person/day';
@@ -27,8 +28,13 @@ const FetchMovie = () => {
     }, [])
 
     const handleSubmit = (e) => {
-        const search = document.getElementById('search').value;
+        const search = document.getElementById('search').value
         e.preventDefault();
+        const split = search.split(' ');
+        split.forEach(element => {
+            console.log(element);
+        });
+        console.log(split.length);
         // console.log(results);
 
         // let i = 0;
@@ -58,7 +64,9 @@ const FetchMovie = () => {
             if (search === results[i].name) {
                 console.log(results[i].known_for);
                 break;
-            } 
+            } else if (search === results[i].known_for_department) {
+                console.log(results[i].name);
+            }
             for (let y = 0; y < results[i].known_for.length; y++) {
                 if (search === results[i].known_for[y].title) {
                     console.log(results[i].name);
