@@ -30,11 +30,15 @@ const FetchMovie = () => {
     const handleSubmit = (e) => {
         const search = document.getElementById('search').value
         e.preventDefault();
+        
+        // partie ci dessous à utiliser avant le fetch pour changer la requete
         const split = search.split(' ');
         split.forEach(element => {
             console.log(element);
         });
         console.log(split.length);
+        //
+
         // console.log(results);
 
         // let i = 0;
