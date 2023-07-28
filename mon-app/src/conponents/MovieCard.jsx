@@ -1,9 +1,19 @@
 import React from 'react'
 
-const MovieCard = () => {
+const MovieCard = (props) => {
+
+  const style = {
+    width: '18rem',
+    margin: '10px'
+  }
+  
   return (
-    <div>
-      
+    <div className="card" style={style} key={props.key}>
+      <img src={props.src} className="card-img-top" alt="" />
+        <div className="card-body overflow-auto p-2" style={{height: '200px'}}>
+          <h5 className="card-title">{props.title}</h5>
+          <p className="card-text">{props.description}</p>
+        </div>
     </div>
   )
 }

@@ -1,93 +1,85 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Import axios
+import '../styles/fetchMovie.css'
+import MovieCard from './MovieCard';
 
 const FetchMovie = () => {
-    const [results, setResults] = useState([]);
+  const [results, setResults] = useState([]);
+  const [splited, setSplited] = useState([]);
+  const [link, setLink] = useState();
 
-    // fetch movie // 
-    useEffect(() => {
-        const url = 'https://api.themoviedb.org/3/trending/person/day';
-        const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4YWNmM2I5OTQzOGFkYjJmNjliMGY0ZDcxYjg1OTQ4ZCIsInN1YiI6IjY0YzI0NTU3MWNmZTNhMGViMzBjNjVlMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.n_YRDZpynJ2zMvcvii1urYQIPAsCtB1hLeLCbmChdB0'
-            }
-        };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const search = document.getElementById('search').value;
+    const split = search.split(' ');
+    setSplited(split);
 
-        const fetchData = async () => {
-            try {
-                const response = await fetch(url, options)
-                const json = await response.json()
-                console.log(json);
-                setResults(json.results)
-            } catch (error) {
-                console.log('error:', error);
-            }
-        }
-        fetchData();
-    }, [])
-
-    const handleSubmit = (e) => {
-        const search = document.getElementById('search').value
-        e.preventDefault();
-        
-        // partie ci dessous à utiliser avant le fetch pour changer la requete
-        const split = search.split(' ');
-        split.forEach(element => {
-            console.log(element);
-        });
-        console.log(split.length);
-        //
-
-        // console.log(results);
-
-        // let i = 0;
-        // let y = 0;
-
-        // while (i < results.length) {
-        //     const know_for = results[i].known_for.length;
-        //     // console.log(results[i]);
-        //     i++;
-        //     while(y < know_for){
-        //         if (search === results[i].name) {
-        //             console.log(results[i].known_for);
-        //             break;
-        //         }else if(search === results[i].known_for[y].title){
-        //             console.log(results[i].name);
-        //         }else{
-        //             console.log('inconu');
-        //             break;
-        //         }
-        //         // console.log(results[i].known_for[y]);
-        //         y++
-        //     }
-        // }
-
-        for (let i = 0; i < results.length; i++) {
-            // console.log(results[i]);
-            if (search === results[i].name) {
-                console.log(results[i].known_for);
-                break;
-            } else if (search === results[i].known_for_department) {
-                console.log(results[i].name);
-            }
-            for (let y = 0; y < results[i].known_for.length; y++) {
-                if (search === results[i].known_for[y].title) {
-                    console.log(results[i].name);
-                    // break
-                }
-            }
-        }
+    for (let i = 0; i < results.length; i++) {
+      // console.log(results[i]);
+      if (search === results[i].name || search === results[i].title) {
+        console.log(results[i].name ? results[i].name : results[i].title);
+        break;
+      }
+      // if(results[i].known_for){
+      //     for (let y = 0; y < results[i].known_for.length; y++) {
+      //         if (search === results[i].known_for[y].title) {
+      //             console.log(results[i].name);
+      //             // break
+      //         }
+      //     }
+      // }
     }
+  };
 
-    return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input type='text' id='search' placeholder='Entrez un nom de film ou acteur' />
-                <button>click me</button>
-            </form>
-        </div>
-    )
-}
+  useEffect(() => {
+    const queryString = splited.map((word, index) => {
+      const separator = index < splited.length - 1 ? '%20' : ''; // Add space unless it's the last word
+      return encodeURIComponent(word) + separator;
+    }).join('');
 
-export default FetchMovie
+    const url = `https://api.themoviedb.org/3/search/multi?query=${queryString}`;
+    setLink(url);
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4YWNmM2I5OTQzOGFkYjJmNjliMGY0ZDcxYjg1OTQ4ZCIsInN1YiI6IjY0YzI0NTU3MWNmZTNhMGViMzBjNjVlMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.n_YRDZpynJ2zMvcvii1urYQIPAsCtB1hLeLCbmChdB0',
+          },
+        });
+
+        setResults(response.data.results);
+      } catch (error) {
+        console.log('error:', error);
+      }
+    };
+
+    fetchData();
+  }, [splited, link]);
+
+  useEffect(() => {
+    // This useEffect will be triggered whenever 'results' changes
+    console.log(results);
+  }, [results]);
+
+  return (
+    <>
+    <div className='box'>
+      <input onChange={handleSubmit} type='text' className='input' id='search' name='search' />
+      </div>
+      
+      <div className='movieContainer'>
+        {results.map((item, index) => {
+
+          return <div key={index}>
+          <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview}/>
+          </div>
+        })}
+      </div>
+      </>
+
+  );
+};
+
+export default FetchMovie;
