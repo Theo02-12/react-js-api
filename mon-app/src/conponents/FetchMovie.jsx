@@ -59,14 +59,14 @@ const FetchMovie = () => {
           // condition pour afficher les films
           if (item.media_type != 'person' && item.media_type != 'tv') {
             return <div key={index}>
-              <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview} />
+              <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview} vote={item.vote_count}/>
             </div>
           }
           // condition pour afficher les films principaux d'un acteur donné
           if(item.known_for){
             return item.known_for.map((films, idx) => {
               return <div key={idx}>
-                <MovieCard src={films.poster_path ? `https://image.tmdb.org/t/p/w500/${films.poster_path}` : ''} title={films.title ? films.title : films.name} description={films.overview} />
+                <MovieCard src={films.poster_path ? `https://image.tmdb.org/t/p/w500/${films.poster_path}` : ''} title={films.title ? films.title : films.name} description={films.overview} vote={films.vote_count}/>
               </div>
             })
           }
