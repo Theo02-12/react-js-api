@@ -8,7 +8,7 @@ const FetchMovie = () => {
   const [splited, setSplited] = useState([]);
   const [link, setLink] = useState();
 
-// fonction onChange de la barre de recherche
+  // fonction onChange de la barre de recherche
   const handleChange = (e) => {
     e.preventDefault();
     const search = document.getElementById('search').value;
@@ -16,7 +16,7 @@ const FetchMovie = () => {
     setSplited(split);
 
   };
-// fetch api 
+  // fetch api 
   useEffect(() => {
     const queryString = splited.map((word, index) => {
       const separator = index < splited.length - 1 ? '%20' : ''; // Add space unless it's the last word
@@ -44,11 +44,11 @@ const FetchMovie = () => {
     fetchData();
   }, [splited, link]);
 
-  useEffect(() => {}, [results]);
+  useEffect(() => { console.log(results); }, [results]);
   return (
     // barre de recherche
     <>
-      
+
       <div className='box'>
         <input onChange={handleChange} type='text' className='input' id='search' name='search' />
       </div>
@@ -59,19 +59,21 @@ const FetchMovie = () => {
           // condition pour afficher les films
           if (item.media_type != 'person' && item.media_type != 'tv') {
             return <div key={index}>
-              <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview} vote={item.vote_count}/>
+              <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview} vote={item.vote_count} id={item.id} />
             </div>
           }
           // condition pour afficher les films principaux d'un acteur donné
-          if(item.known_for){
+          if (item.known_for) {
             return item.known_for.map((films, idx) => {
               return <div key={idx}>
-                <MovieCard src={films.poster_path ? `https://image.tmdb.org/t/p/w500/${films.poster_path}` : ''} title={films.title ? films.title : films.name} description={films.overview} vote={films.vote_count}/>
+                <MovieCard src={films.poster_path ? `https://image.tmdb.org/t/p/w500/${films.poster_path}` : ''} title={films.title ? films.title : films.name} description={films.overview} vote={films.vote_count} id={films.id} />
               </div>
             })
           }
 
         })}
+
+
       </div>
     </>
 
