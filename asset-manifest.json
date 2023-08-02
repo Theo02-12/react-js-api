@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Theo02-12/react-js-api/mon-app/static/css/main.ceae4d46.css",
-    "main.js": "/Theo02-12/react-js-api/mon-app/static/js/main.35329811.js",
-    "static/js/787.6d185335.chunk.js": "/Theo02-12/react-js-api/mon-app/static/js/787.6d185335.chunk.js",
-    "index.html": "/Theo02-12/react-js-api/mon-app/index.html",
-    "main.ceae4d46.css.map": "/Theo02-12/react-js-api/mon-app/static/css/main.ceae4d46.css.map",
-    "main.35329811.js.map": "/Theo02-12/react-js-api/mon-app/static/js/main.35329811.js.map",
-    "787.6d185335.chunk.js.map": "/Theo02-12/react-js-api/mon-app/static/js/787.6d185335.chunk.js.map"
+    "main.css": "./static/css/main.ceae4d46.css",
+    "main.js": "./static/js/main.ec7838a9.js",
+    "static/js/787.6d185335.chunk.js": "./static/js/787.6d185335.chunk.js",
+    "index.html": "./index.html",
+    "main.ceae4d46.css.map": "./static/css/main.ceae4d46.css.map",
+    "main.ec7838a9.js.map": "./static/js/main.ec7838a9.js.map",
+    "787.6d185335.chunk.js.map": "./static/js/787.6d185335.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ceae4d46.css",
-    "static/js/main.35329811.js"
+    "static/js/main.ec7838a9.js"
   ]
 }
