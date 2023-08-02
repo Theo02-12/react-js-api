@@ -4,31 +4,16 @@ import '../styles/fetchMovie.css'
 import MovieCard from './MovieCard';
 
 
-
 const FetchMovie = () => {
   const [results, setResults] = useState([]);
   const [link, setLink] = useState();
   const [searchResult, setSearchResult] = useState();
-  const [media, setMedia] = useState();
-  const [id, setId] = useState();
-
-
-
-  const favoritePost = (e) => {
-    console.log(results);
-    for (let i = 0; i < results.length; i++) {
-
-    }
-  }
-
-
 
   // fonction onChange de la barre de recherche
   const handleChange = (e) => {
     e.preventDefault();
     const search = document.getElementById('search').value;
     setSearchResult(search)
-
   };
   // fetch api 
   useEffect(() => {
@@ -52,7 +37,6 @@ const FetchMovie = () => {
         console.log('error:', error);
       }
     };
-
     fetchData();
   }, [searchResult, link]);
 
@@ -66,12 +50,10 @@ const FetchMovie = () => {
 
       <div className='movieContainer'>
         {results.map((item, index) => {
-          {/* setId(item.id)
-          setMedia(item.media_type) */}
           // condition pour afficher les films
           if (item.media_type != 'person' && item.media_type != 'tv') {
             return <div key={index}>
-              <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview} vote={item.vote_count} id={item.id}/>
+              <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview} vote={item.vote_count} id={item.id} />
             </div>
           }
           // condition pour afficher les films principaux d'un acteur donné
@@ -89,5 +71,8 @@ const FetchMovie = () => {
 
   );
 };
+
+
+
 
 export default FetchMovie;
