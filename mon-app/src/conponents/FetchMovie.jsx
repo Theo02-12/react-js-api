@@ -71,38 +71,7 @@ const FetchMovie = () => {
           // condition pour afficher les films
           if (item.media_type != 'person' && item.media_type != 'tv') {
             return <div key={index}>
-              <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview} vote={item.vote_count} id={item.id}
-                onClick={async () => {
-
-                  console.log(item.id)
-
-                  const url = 'https://api.themoviedb.org/3/account/20211099/favorite';
-                  const options = {
-                    method: 'POST',
-                    params: {
-                      session_id: 'ba5fdfbc6dbd4b84dc4a3d56931157bde0b1e2aa'
-                    },
-                    headers: {
-                      accept: 'application/json',
-                      'Content-Type': 'application/json',
-                      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4YWNmM2I5OTQzOGFkYjJmNjliMGY0ZDcxYjg1OTQ4ZCIsInN1YiI6IjY0YzI0NTU3MWNmZTNhMGViMzBjNjVlMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.n_YRDZpynJ2zMvcvii1urYQIPAsCtB1hLeLCbmChdB0'
-                    },
-                    body: JSON.stringify({ 
-                      media_type: 'movie',
-                      media_id: 550,
-                      favorite: true 
-                      })
-                  };
-                
-                  await axios.post(url, options)
-                    .then(function (response) {
-                      console.log(response);
-                    })
-                    .catch(function (error) {
-                      console.log(error);
-                    });
-                }}
-              />
+              <MovieCard src={item.poster_path ? `https://image.tmdb.org/t/p/w500/${item.poster_path}` : ''} title={item.title} description={item.overview} vote={item.vote_count} id={item.id}/>
             </div>
           }
           // condition pour afficher les films principaux d'un acteur donné
